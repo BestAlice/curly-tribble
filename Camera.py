@@ -1,5 +1,5 @@
 import pygame
-from main import WIDTH, HEIGHT
+from permanent import WIDTH, HEIGHT
 
 class Camera:
     def __init__(self):
