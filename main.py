@@ -1,7 +1,6 @@
 import pygame
 import os
 from permanent import WIDTH, HEIGHT, FPS
-#плохо работает слейдующая строчка
 from Camera import Camera
 from fire_magician import Fire_magician
 from goblin import Goblin
