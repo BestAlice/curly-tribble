@@ -13,18 +13,3 @@ class Fire_magician(pygame.sprite.Sprite):
     def update(self):
         pass
 
-if __name__ == "__main__":
-    pygame.init()
-    size = (WIDTH, HEIGHT)
-    screen = pygame.display.set_mode(size)
-    clock = pygame.time.Clock()
-    running = True
-    all_sprites = pygame.sprite.Group()
-    player = Fire_magician(all_sprites)
-    all_sprites.draw(screen)
-    pygame.display.flip()
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-    pygame.quit()
