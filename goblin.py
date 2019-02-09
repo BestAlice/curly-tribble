@@ -5,6 +5,7 @@ sp_Names = ['Gob_left1.png','Gob_left2.png','Gob_left3.png',
             'Gob_left4.png','Gob_left5.png','Gob_left6.png','Gob_left7.png',
             'Gob_left8.png','Gob_left9.png','Gob_left10.png']
 
+
 class Goblin(pygame.sprite.Sprite):
     def __init__(self, group):
         super().__init__(group)
@@ -19,8 +20,6 @@ class Goblin(pygame.sprite.Sprite):
         self.v = 2
         self.Left = False
         self.Right = False
-        
-
         self.animCount = 0 
         
     def Fire_x_y(self, player, rect):
@@ -90,3 +89,7 @@ class Goblin(pygame.sprite.Sprite):
             self.Left = False
             self.Right = False
         self.side()
+     
+    def get_event(self, event):
+        pass
+        
