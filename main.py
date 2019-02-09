@@ -1,7 +1,6 @@
 import pygame
 import os
 from permanent import WIDTH, HEIGHT, FPS
-#плохо работает слейдующая строчка
 from Camera import Camera
 from fire_magician import Fire_magician
 from goblin import Goblin
@@ -14,13 +13,16 @@ running = True
 
 all_sprites = pygame.sprite.Group()
 player = Fire_magician(all_sprites)
-gobs = Goblin(all_sprites)
+gob = Goblin(all_sprites)
+
 screen.fill(pygame.Color('black')) #почему бы и нет
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        for sprite in all_sprites:
+            sprite.get_event(event)
     screen.fill(pygame.Color('black'))
     all_sprites.update()
     all_sprites.draw(screen)

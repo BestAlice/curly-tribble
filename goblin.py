@@ -8,3 +8,7 @@ class Goblin(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()        
         self.rect.x = 500
         self.rect.y = 350
+        self.mask = pygame.mask.from_surface(self.image)
+    def get_event(self, event):
+        pass
+        
