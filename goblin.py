@@ -1,9 +1,10 @@
 import pygame
 from permanent import HEIGHT, WIDTH, load_image, FPS
 from fire_magician import Fire_magician
-sp_Names = ['Gob_left1.png','Gob_left2.png','Gob_left3.png',
-            'Gob_left4.png','Gob_left5.png','Gob_left6.png','Gob_left7.png',
-            'Gob_left8.png','Gob_left9.png','Gob_left10.png']
+sp_Names = ['gob-go/Gob_left1.png','gob-go/Gob_left2.png','gob-go/Gob_left3.png',
+            'gob-go/Gob_left4.png','gob-go/Gob_left5.png','gob-go/Gob_left6.png',
+            'gob-go/Gob_left7.png','gob-go/Gob_left8.png','gob-go/Gob_left9.png',
+            'gob-go/Gob_left10.png']
 
 
 class Goblin(pygame.sprite.Sprite):
