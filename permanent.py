@@ -1,6 +1,6 @@
 WIDTH = 1000 #ширина
-HEIGHT = 600 #высота
-FPS = 60
+HEIGHT = 700 #высота
+FPS = 30
 
 import pygame
 import os
@@ -19,3 +19,6 @@ def load_image(name, colorkey=None):
         image.set_colorkey(colorkey)
     image = image.convert_alpha()
     return image
+
+
+
