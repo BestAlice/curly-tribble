@@ -1,10 +1,9 @@
 import pygame
 import os
 from permanent import WIDTH, HEIGHT, FPS, load_image
-from Camera import Camera
-
 from fire_magician import Fire_magician
 from goblin import Goblin
+from HP import HP
 
 pygame.init()
 size = (WIDTH, HEIGHT)
@@ -15,7 +14,7 @@ running = True
 all_sprites = pygame.sprite.Group()
 gobs = Goblin(all_sprites)
 player = Fire_magician(all_sprites)
-
+hp = HP(all_sprites, screen)
 gobs.Fire_x_y(player, player.rect)
 Fon = load_image('Fon.png')
 

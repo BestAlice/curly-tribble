@@ -34,7 +34,7 @@ class Goblin(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 500
         self.rect.y = 350
-        self.v = 2
+        self.v = 60 / FPS
         self.Left = False
         self.Right = False
         self.Down = False
@@ -64,7 +64,7 @@ class Goblin(pygame.sprite.Sprite):
         yN = self.rect.y
         x = self.Fx
         y = self.Fy
-        if self.animCount +1 >= 60:
+        if self.animCount +1 >= 30:
             self.animCount = 0
 
         if self.Left:
