@@ -19,3 +19,6 @@ def load_image(name, colorkey=None):
         image.set_colorkey(colorkey)
     image = image.convert_alpha()
     return image
+
+
+

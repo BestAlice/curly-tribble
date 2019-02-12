@@ -1,6 +1,6 @@
 import pygame
 import os
-from permanent import WIDTH, HEIGHT, FPS
+from permanent import WIDTH, HEIGHT, FPS, load_image
 from Camera import Camera
 
 from fire_magician import Fire_magician
@@ -13,13 +13,11 @@ clock = pygame.time.Clock()
 running = True
 
 all_sprites = pygame.sprite.Group()
-player = Fire_magician(all_sprites)
-gob = Goblin(all_sprites)
-
 gobs = Goblin(all_sprites)
-gobs.Fire_x_y(player, player.rect)
+player = Fire_magician(all_sprites)
 
-screen.fill(pygame.Color('black')) #почему бы и нет
+gobs.Fire_x_y(player, player.rect)
+Fon = load_image('Fon.png')
 
 while running:
     for event in pygame.event.get():
@@ -27,7 +25,8 @@ while running:
             running = False
         for sprite in all_sprites:
             sprite.get_event(event)
-    screen.fill(pygame.Color('black'))
+    gobs.Fire_x_y(player, player.rect)
+    screen.blit(Fon, (0, 0))
     all_sprites.update()
     all_sprites.draw(screen)
     pygame.display.flip()
