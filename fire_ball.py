@@ -49,7 +49,6 @@ class Fire_ball(pygame.sprite.Sprite):
         for gobs in self.enemys:
             if pygame.sprite.collide_mask(self, gobs):
                 self.fire_boom()
-        
 
     def fire_boom(self):
         self.speed = 0

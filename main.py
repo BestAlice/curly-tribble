@@ -25,7 +25,9 @@ Pausa = load_image('Pausa.png', -1)
 
 pygame.time.set_timer(USEREVENT, 1000)
 
-
+pygame.mixer.music.load('data/audio.mp3')
+pygame.mixer.music.play()
+pygame.mixer.music.set_volume(0.1)
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -33,7 +35,6 @@ while running:
         if event.type == USEREVENT:
             if gobs.Atak and not Pause:
                 hp.damage(gobs.damage)
-                print(hp.hp)
         if event.type == pygame.KEYDOWN:
             if event.key == 112:
                 if not Pause:

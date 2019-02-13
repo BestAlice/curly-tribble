@@ -25,8 +25,9 @@ class Fire_magician(pygame.sprite.Sprite):
         self.left = False
         self.right = False
         self.speed = 450 / FPS
-        self.Pause = False
+        #self.Pause = False
         self.tick = pygame.time.get_ticks()
+
 
     def update(self):
         #нужны рамки!!!!!!!!!!!
@@ -74,24 +75,3 @@ class Fire_magician(pygame.sprite.Sprite):
                 elif self.mainMag == self.MagUp:
                     self.fire_atack = Fire_ball(self.grop, 'Up', self.rect, self.enemy)
                 self.tick = pygame.time.get_ticks()
-
-if __name__ == "__main__":
-    pygame.init()
-    size = (WIDTH, HEIGHT)
-    screen = pygame.display.set_mode(size)
-    clock = pygame.time.Clock()
-    running = True
-    all_sprites = pygame.sprite.Group()
-    player = Fire_magician(all_sprites, enemy)
-    
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            player.get_event(event)
-        all_sprites.update()
-        screen.fill(pygame.Color('black'))
-        all_sprites.draw(screen)
-        pygame.display.flip()
-        pygame.time.Clock().tick(FPS)
-    pygame.quit()

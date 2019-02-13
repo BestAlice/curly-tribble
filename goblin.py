@@ -48,7 +48,6 @@ class Goblin(pygame.sprite.Sprite):
         self.Up = False
         self.Atak = False
         self.animCount = 0
-        self.Pause = False
         self.full_sp()
 
     def full_sp(self):
@@ -64,14 +63,11 @@ class Goblin(pygame.sprite.Sprite):
             self.GobAtakU.append(load_image('gob-atak/' + sp_Names_U_atak[i], -1))
         
     def Fire_x_y(self, player, rect):
-        if not self.Pause:
-            self.player = player
-            self.Frect = rect
-            self.Fx = rect[0] + int(rect[2] / 2)
-            self.Fy = rect[1] + int(rect[3] / 2)
-            self.update()
-        else:
-            pass
+        self.player = player
+        self.Frect = rect
+        self.Fx = rect[0] + int(rect[2] / 2)
+        self.Fy = rect[1] + int(rect[3] / 2)
+        self.update()
 
         
     def update(self):
@@ -90,7 +86,7 @@ class Goblin(pygame.sprite.Sprite):
             if self.animCount +1 >= 30:
                 self.animCount = 0
             
-            elif self.Left: 
+            if self.Left: 
                 self.image = pygame.transform.rotozoom(self.GobLeft[self.animCount // 3],
                                                        0, 0.6)
                 self.animCount += 1
@@ -162,25 +158,25 @@ class Goblin(pygame.sprite.Sprite):
             self.Down = False
             self.Up = False
         elif xN > x and yN == y: #Right 
-            xN -= self.v
+            xN -= self.v + 2.1
             self.Left = True
             self.Right = False
             self.Down = False
             self.Up = False
         elif xN < x and yN == y: #Left
-            xN += self.v
+            xN += self.v + 2.1
             self.Left = False
             self.Right = True
             self.Down = False
             self.Up = False
         elif yN < y and xN == x: #Down
-            yN += self.v
+            yN += self.v + 2.1
             self.Left = False
             self.Right = False
             self.Down = True
             self.Up = False
         elif yN > y and xN == x: #Up
-            yN -= self.v
+            yN -= self.v + 2.2
             self.Left = False
             self.Right = False
             self.Down = False
