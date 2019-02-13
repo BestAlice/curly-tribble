@@ -41,7 +41,7 @@ class Goblin(pygame.sprite.Sprite):
         self.rect.x = 500
         self.rect.y = 350
         self.v = 60 / FPS
-        self.damage = 1
+        self.damage = 5
         self.Left = False
         self.Right = False
         self.Down = False
@@ -75,18 +75,15 @@ class Goblin(pygame.sprite.Sprite):
 
         
     def update(self):
-        if not self.Pause:
-            if not pygame.sprite.collide_mask(self, self.player):
-                self.rect = self.rect.move(0, 1)
-                self.collision()
-                self.Atak = False
-                self.side()
-            elif pygame.sprite.collide_mask(self, self.player):
-                self.collision()
-                self.Atak = True
-                self.side()
-        else:
-            pass
+        if not pygame.sprite.collide_mask(self, self.player):
+            self.rect = self.rect.move(0, 1)
+            self.collision()
+            self.Atak = False
+            self.side()
+        elif pygame.sprite.collide_mask(self, self.player):
+            self.collision()
+            self.Atak = True
+            self.side()
         
     def side(self):
         if not self.Atak:
@@ -196,10 +193,5 @@ class Goblin(pygame.sprite.Sprite):
         self.rect.y = yN
      
     def get_event(self, event):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_p]:
-            if not self.Pause:
-                self.Pause = True
-            else:
-                self.Pause = False
+        pass
         
