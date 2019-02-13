@@ -7,9 +7,6 @@ class HP(pygame.sprite.Sprite):
         self.pole = pygame.Surface((330, 60)) 
         self.obvodka = pygame.Rect(0, 0, 330, 60)
         self.red = pygame.Rect(0, 0, int(330 * self.hp // 100), 60)
-
-        pygame.draw.rect(self.pole, (180, 6, 6), self.red)
-        pygame.draw.rect(self.pole, pygame.Color('black'), self.obvodka, 5)
         
         self.image = self.pole
         self.rect = self.image.get_rect()
@@ -18,6 +15,7 @@ class HP(pygame.sprite.Sprite):
         # 80, 630
     
     def update(self):
+        self.red = pygame.Rect(0, 0, int(330 * self.hp // 100), 60)
         pygame.draw.rect(self.pole, (180, 6, 6), self.red)
         pygame.draw.rect(self.pole, pygame.Color('black'), self.obvodka, 5)
         self.image = self.pole
