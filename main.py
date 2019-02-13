@@ -12,6 +12,7 @@ screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 running = True
 Pause = False
+Game_Over = False
 USEREVENT = 1
 
 all_sprites = pygame.sprite.Group()
@@ -24,31 +25,43 @@ Pausa = load_image('Pausa.png', -1)
 
 pygame.time.set_timer(USEREVENT, 1000)
 
+pygame.mixer.music.load('data/audio.mp3')
+pygame.mixer.music.play()
+pygame.mixer.music.set_volume(0.1)
+              
 while running:
-    if hp.hp > 0:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            if event.type == USEREVENT:
-                if gobs.Atak:
-                    hp.damage(gobs.damage)
-                    print(hp.hp)
-            if event.type == pygame.KEYDOWN:
-                if event.key == 112:
-                    if not Pause:
-                        Pause = True
-                    else:
-                        Pause = False
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == USEREVENT:
+            if gobs.Atak and not Pause:
+                hp.damage(gobs.damage)
+        if event.type == pygame.KEYDOWN:
+            if event.key == 112:
+                if not Pause:
+                    Pause = True
+                else:
+                    Pause = False
+            if event.key == 13:
+                Game_Over = False
+        if not Pause:
             for sprite in all_sprites:
-                sprite.get_event(event)
+                    sprite.get_event(event)
+    if hp.hp <= 0:
+        Game_Over = True
+    screen.blit(Fon, (0, 0))
+    if not Pause:
         gobs.Fire_x_y(player, player.rect)
-        screen.blit(Fon, (0, 0))
         all_sprites.update()
-        all_sprites.draw(screen)
-        if Pause:
-            screen.blit(Pausa, (0, 0))
-    else:
+    all_sprites.draw(screen)
+    if Pause:
+        screen.blit(Pausa, (0, 0))
+    if Game_Over:
         screen.blit(Game_over, (0, 0))
+        all_sprites = pygame.sprite.Group()
+        gobs = Goblin(all_sprites)
+        player = Fire_magician(all_sprites)
+        hp = HP(all_sprites, screen)
     pygame.display.flip()
     clock.tick(FPS)
 pygame.quit()
