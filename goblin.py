@@ -1,7 +1,7 @@
 import pygame
 from permanent import HEIGHT, WIDTH, load_image, FPS
 from fire_magician import Fire_magician
-from HP import HP
+from HP import Hp
 sp_Names_Left = ['Gob_left1.png','Gob_left2.png','Gob_left3.png',
                 'Gob_left4.png','Gob_left5.png','Gob_left6.png','Gob_left7.png',
                 'Gob_left8.png','Gob_left9.png','Gob_left10.png']
@@ -25,7 +25,7 @@ sp_Names_U_atak = ['Gob_U_atak1.png','Gob_U_atak2.png','Gob_U_atak3.png',
 
 
 class Goblin(pygame.sprite.Sprite):
-    def __init__(self, group):
+    def __init__(self, x, y, group):
         super().__init__(group)
         self.GobLeft = []
         self.GobRight = []
@@ -38,8 +38,8 @@ class Goblin(pygame.sprite.Sprite):
         self.image = pygame.transform.rotozoom(load_image('Gob1.png', -1), 0, 0.6)
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
-        self.rect.x = 500
-        self.rect.y = 350
+        self.rect.x = x
+        self.rect.y = y
         self.v = 60 / FPS
         self.damage = 5
         self.Left = False
@@ -49,6 +49,8 @@ class Goblin(pygame.sprite.Sprite):
         self.Atak = False
         self.animCount = 0
         self.full_sp()
+        self.USEREVENT = 1
+        pygame.time.set_timer(self.USEREVENT, 1000)
 
     def full_sp(self):
         for i in range(10):
@@ -190,4 +192,3 @@ class Goblin(pygame.sprite.Sprite):
      
     def get_event(self, event):
         pass
-        

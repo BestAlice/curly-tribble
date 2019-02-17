@@ -4,10 +4,11 @@ from fire_ball import Fire_ball
 
 
 class Fire_magician(pygame.sprite.Sprite):
-    def __init__(self, group):
+    def __init__(self, group, enemy):
         global size
         super().__init__(group)
         self.grop = group
+        self.enemy = enemy
         self.MagDown = [pygame.transform.rotozoom(load_image(f"mag-go/down/{i}.png", -1), 0, 0.5) for i in range(1, 7)]
         self.MagUp = [pygame.transform.rotozoom(load_image(f"mag-go/up/{i}.png", -1), 0, 0.5) for i in range(1, 7)]
         self.MagLeft = [pygame.transform.rotozoom(load_image(f"mag-go/left/{i}.png", -1), 0, 0.5) for i in range(1, 7)]
@@ -24,6 +25,9 @@ class Fire_magician(pygame.sprite.Sprite):
         self.left = False
         self.right = False
         self.speed = 450 / FPS
+        #self.Pause = False
+        self.tick = pygame.time.get_ticks()
+
 
     def update(self):
         #нужны рамки!!!!!!!!!!!
@@ -61,32 +65,13 @@ class Fire_magician(pygame.sprite.Sprite):
         else:
             self.up = False
         if keys[pygame.K_SPACE]:
-            if self.mainMag == self.MagLeft:
-                self.fire_atack = Fire_ball(self.grop, 'Left', self.rect)
-            elif self.mainMag == self.MagRight:
-                self.fire_atack = Fire_ball(self.grop, 'Right', self.rect)
-            elif self.mainMag == self.MagDown:
-                self.fire_atack = Fire_ball(self.grop, 'Down', self.rect)
-            elif self.mainMag == self.MagUp:
-                self.fire_atack = Fire_ball(self.grop, 'Up', self.rect)
-
-if __name__ == "__main__":
-    pygame.init()
-    size = (WIDTH, HEIGHT)
-    screen = pygame.display.set_mode(size)
-    clock = pygame.time.Clock()
-    running = True
-    all_sprites = pygame.sprite.Group()
-    player = Fire_magician(all_sprites)
-    
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            player.get_event(event)
-        all_sprites.update()
-        screen.fill(pygame.Color('black'))
-        all_sprites.draw(screen)
-        pygame.display.flip()
-        pygame.time.Clock().tick(FPS)
-    pygame.quit()
+            if pygame.time.get_ticks() - self.tick > 500:
+                if self.mainMag == self.MagLeft:
+                    self.fire_atack = Fire_ball(self.grop, 'Left', self.rect, self.enemy)
+                elif self.mainMag == self.MagRight:
+                    self.fire_atack = Fire_ball(self.grop, 'Right', self.rect, self.enemy)
+                elif self.mainMag == self.MagDown:
+                    self.fire_atack = Fire_ball(self.grop, 'Down', self.rect, self.enemy)
+                elif self.mainMag == self.MagUp:
+                    self.fire_atack = Fire_ball(self.grop, 'Up', self.rect, self.enemy)
+                self.tick = pygame.time.get_ticks()

@@ -1,9 +1,8 @@
+import pygame
+import os
 WIDTH = 1000 #ширина
 HEIGHT = 700 #высота
 FPS = 30
-
-import pygame
-import os
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -19,6 +18,3 @@ def load_image(name, colorkey=None):
         image.set_colorkey(colorkey)
     image = image.convert_alpha()
     return image
-
-
-
