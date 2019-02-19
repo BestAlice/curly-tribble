@@ -55,29 +55,32 @@ while running:
         if not Pause:
             for sprite in all_sprites:
                     sprite.get_event(event)
-            for gob in gobs:
+            for gob in enemys:
                 if event.type == gob.USEREVENT:
                     if gob.Atak:
                         hp.damage(gob.damage)
-                    
+                        player.wound()
     if hp.hp <= 0:
         Game_Over = True
     screen.blit(Fon, (0, 0))
     if not Pause:
-        for i in gobs:
+        for i in enemys:
             i.Fire_x_y(player, player.rect)
         all_sprites.update()
+        for gob in enemys:
+            if gob.hp <= 0:
+                gob.kill()
     all_sprites.draw(screen)
     if Pause:
         screen.blit(Pausa, (0, 0))
     if Game_Over:
-        screen.blit(Game_over, (0, 0))
         all_sprites = pygame.sprite.Group()
         enemys = pygame.sprite.Group()
         gobs = [Goblin(800, 200, (all_sprites, enemys)),
             Goblin(800, 500, (all_sprites, enemys))]
         player = Fire_magician(all_sprites, enemys)
         hp = Hp(all_sprites, screen)
+        screen.blit(Game_over, (0, 0))
     pygame.display.flip()
     clock.tick(FPS)
 pygame.quit()

@@ -1,7 +1,7 @@
 import pygame
 from permanent import HEIGHT, WIDTH, load_image, FPS
 from fire_magician import Fire_magician
-from HP import Hp
+
 sp_Names_Left = ['Gob_left1.png','Gob_left2.png','Gob_left3.png',
                 'Gob_left4.png','Gob_left5.png','Gob_left6.png','Gob_left7.png',
                 'Gob_left8.png','Gob_left9.png','Gob_left10.png']
@@ -41,6 +41,7 @@ class Goblin(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         self.v = 60 / FPS
+        self.hp = 10
         self.damage = 5
         self.Left = False
         self.Right = False
@@ -71,7 +72,6 @@ class Goblin(pygame.sprite.Sprite):
         self.Fy = rect[1] + int(rect[3] / 2)
         self.update()
 
-        
     def update(self):
         if not pygame.sprite.collide_mask(self, self.player):
             self.rect = self.rect.move(0, 1)
@@ -124,6 +124,7 @@ class Goblin(pygame.sprite.Sprite):
                 self.image = pygame.transform.rotozoom(self.GobAtakU[self.animCount // 5],
                                                         0, 0.6)
                 self.animCount += 1
+
             
         
     def collision(self):
@@ -192,3 +193,6 @@ class Goblin(pygame.sprite.Sprite):
      
     def get_event(self, event):
         pass
+
+    def wound(self, damage):
+        self.hp -= damage
