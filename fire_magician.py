@@ -9,10 +9,14 @@ class Fire_magician(pygame.sprite.Sprite):
         super().__init__(group)
         self.grop = group
         self.enemy = enemy
-        self.MagDown = [pygame.transform.rotozoom(load_image(f"mag-go/down/{i}.png", -1), 0, 0.5) for i in range(1, 7)]
-        self.MagUp = [pygame.transform.rotozoom(load_image(f"mag-go/up/{i}.png", -1), 0, 0.5) for i in range(1, 7)]
-        self.MagLeft = [pygame.transform.rotozoom(load_image(f"mag-go/left/{i}.png", -1), 0, 0.5) for i in range(1, 7)]
-        self.MagRight = [pygame.transform.rotozoom(load_image(f"mag-go/right/{i}.png", -1), 0, 0.5) for i in range(1, 7)]
+        self.MagDown = [pygame.transform.rotozoom(load_image(f"mag-go/down/{i}.png", -1), 0, 0.5) for i in range(1, 7)] 
+        self.MagDown.append(pygame.transform.rotozoom(load_image("mag-go/down/damage.png", -1), 0, 0.5))
+        self.MagUp = [pygame.transform.rotozoom(load_image(f"mag-go/up/{i}.png", -1), 0, 0.5) for i in range(1, 7)] 
+        self.MagUp.append(pygame.transform.rotozoom(load_image("mag-go/up/damage.png", -1), 0, 0.5))
+        self.MagLeft = [pygame.transform.rotozoom(load_image(f"mag-go/left/{i}.png", -1), 0, 0.5) for i in range(1, 7)] 
+        self.MagLeft.append(pygame.transform.rotozoom(load_image("mag-go/left/damage.png", -1), 0, 0.5))
+        self.MagRight = [pygame.transform.rotozoom(load_image(f"mag-go/right/{i}.png", -1), 0, 0.5) for i in range(1, 7)] 
+        self.MagRight.append(pygame.transform.rotozoom(load_image("mag-go/right/damage.png", -1), 0, 0.5))
         self.mainMag = self.MagDown
         self.frame = 0
         self.image = pygame.transform.rotozoom(load_image("mag.png", -1), 0, 0.3)
@@ -24,13 +28,12 @@ class Fire_magician(pygame.sprite.Sprite):
         self.up = False
         self.left = False
         self.right = False
+        self.red_image = False
         self.speed = 450 / FPS
-        #self.Pause = False
         self.tick = pygame.time.get_ticks()
 
 
     def update(self):
-        #нужны рамки!!!!!!!!!!!
         if self.down:
             self.rect.y += self.speed if self.rect[1] + self.rect[3] < HEIGHT - 160 else 0
         if self.up:
@@ -41,6 +44,10 @@ class Fire_magician(pygame.sprite.Sprite):
             self.rect.x += self.speed if self.rect[0] + self.rect[2] < WIDTH - 160 else 0
         self.image = self.mainMag[self.frame//5]
         self.frame = self.frame + 1 if self.frame != 29 else 0
+        if self.red_image and self.frame < 5:
+            self.image = self.mainMag[-1]
+        else:
+            self.red_image = False
 
     def get_event(self, event):
         keys = pygame.key.get_pressed()
@@ -75,3 +82,7 @@ class Fire_magician(pygame.sprite.Sprite):
                 elif self.mainMag == self.MagUp:
                     self.fire_atack = Fire_ball(self.grop, 'Up', self.rect, self.enemy)
                 self.tick = pygame.time.get_ticks()
+    
+    def wound(self):
+        self.frame = 0
+        self.red_image = True
