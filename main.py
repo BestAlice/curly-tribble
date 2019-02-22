@@ -43,12 +43,14 @@ while not go_game:
         go_game = True
     pygame.display.flip()
     clock.tick(FPS)
-
+    
 player = Fire_magician(all_sprites, enemys)
 hp = Hp(all_sprites, screen)
 gobs = [Goblin(800, 200, (all_sprites, enemys)),
         Goblin(800, 500, (all_sprites, enemys))]
-
+Fon = load_image('Fon.png')
+Game_over = load_image('Game_over.png')
+Pausa = load_image('Pausa.png', -1)
 
 #pygame.mixer.music.load('data/audio.mp3') чтобы пока музыка не мешала 
 #pygame.mixer.music.play()                 

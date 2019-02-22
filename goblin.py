@@ -193,7 +193,6 @@ class Goblin(pygame.sprite.Sprite):
      
     def get_event(self, event):
         pass
-
+                
     def wound(self, damage):
         self.hp -= damage
-
