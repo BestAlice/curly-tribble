@@ -50,7 +50,6 @@ gobs = [Goblin(800, 200, (all_sprites, enemys)),
         Goblin(800, 500, (all_sprites, enemys))]
 
 
-
 #pygame.mixer.music.load('data/audio.mp3') чтобы пока музыка не мешала 
 #pygame.mixer.music.play()                 
 #pygame.mixer.music.set_volume(0.1)
@@ -65,6 +64,9 @@ def music():
         pygame.mixer.music.unpause()
 
 while running:
+    if pygame.sprite.collide_circle(gobs[0], gobs[1]):
+        gobs[0].rect.x += 2
+        gobs[0].rect.y += 2
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -95,6 +97,8 @@ while running:
         all_sprites.update()
         for gob in enemys:
             if gob.hp <= 0:
+                gob.rect.x += 1000
+                gob.rect.y += 1000
                 gob.kill()
     all_sprites.draw(screen)
     if Pause:

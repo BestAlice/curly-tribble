@@ -173,7 +173,7 @@ class Goblin(pygame.sprite.Sprite):
             self.Down = False
             self.Up = False
         elif yN < y and xN == x: #Down
-            yN += self.v + 2.1
+            yN += self.v + 2.2
             self.Left = False
             self.Right = False
             self.Down = True
@@ -196,3 +196,4 @@ class Goblin(pygame.sprite.Sprite):
 
     def wound(self, damage):
         self.hp -= damage
+
