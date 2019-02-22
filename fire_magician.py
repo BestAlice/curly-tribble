@@ -1,5 +1,5 @@
 import pygame
-from permanent import HEIGHT, WIDTH, load_image, FPS
+from permanent import HEIGHT, WIDTH, load_image, FPS, LEFT, RIGHT, UP, DOWN
 from fire_ball import Fire_ball
 
 
@@ -21,8 +21,8 @@ class Fire_magician(pygame.sprite.Sprite):
         self.frame = 0
         self.image = pygame.transform.rotozoom(load_image("mag.png", -1), 0, 0.3)
         self.rect = self.image.get_rect()        
-        self.rect.x = 100
-        self.rect.y = 100
+        self.rect.x = (WIDTH + self.rect[2]) // 2
+        self.rect.y = (HEIGHT + self.rect[3]) // 2
         self.mask = pygame.mask.from_surface(self.image)
         self.down = False 
         self.up = False
@@ -35,13 +35,13 @@ class Fire_magician(pygame.sprite.Sprite):
 
     def update(self):
         if self.down:
-            self.rect.y += self.speed if self.rect[1] + self.rect[3] < HEIGHT - 160 else 0
+            self.rect.y += self.speed if self.rect[1] + self.rect[3] < DOWN else 0
         if self.up:
-            self.rect.y -= self.speed if self.rect[1] > 0 else 0 
+            self.rect.y -= self.speed if self.rect[1] > UP else 0 
         if self.left:
-            self.rect.x -= self.speed if self.rect[0] > 100 else 0 
+            self.rect.x -= self.speed if self.rect[0] > LEFT else 0 
         if self.right:
-            self.rect.x += self.speed if self.rect[0] + self.rect[2] < WIDTH - 160 else 0
+            self.rect.x += self.speed if self.rect[0] + self.rect[2] < RIGHT else 0
         self.image = self.mainMag[self.frame//5]
         self.frame = self.frame + 1 if self.frame != 29 else 0
         if self.red_image and self.frame < 5:

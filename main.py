@@ -1,9 +1,10 @@
 import pygame
 import os
-from permanent import WIDTH, HEIGHT, FPS, load_image
+from permanent import WIDTH, HEIGHT, FPS, load_image, load_music
 from fire_magician import Fire_magician
 from goblin import Goblin
 from HP import Hp
+from Levels import Levels
 
 pygame.init()
 size = (WIDTH, HEIGHT)
@@ -16,6 +17,8 @@ M = True
 
 all_sprites = pygame.sprite.Group()
 enemys = pygame.sprite.Group()
+
+level = Levels(screen, all_sprites, enemys)
 
 start_screen = load_image('Start.png')
 space = load_image('переход.png')
@@ -30,6 +33,8 @@ fon_y = 0
 while not go_game:
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
+            if event.key == 13 and press_enter:
+                fon_y = -1400
             if event.key == 13: #Enter
                 press_enter = True
     if press_enter:
@@ -46,15 +51,9 @@ while not go_game:
     
 player = Fire_magician(all_sprites, enemys)
 hp = Hp(all_sprites, screen)
-gobs = [Goblin(800, 200, (all_sprites, enemys)),
-        Goblin(800, 500, (all_sprites, enemys))]
-Fon = load_image('Fon.png')
-Game_over = load_image('Game_over.png')
-Pausa = load_image('Pausa.png', -1)
 
-#pygame.mixer.music.load('data/audio.mp3') чтобы пока музыка не мешала 
-#pygame.mixer.music.play()                 
-#pygame.mixer.music.set_volume(0.1)
+name_music = 'data/battle.mp3'
+load_music(name_music)
 
 def music():
     global M
@@ -66,9 +65,9 @@ def music():
         pygame.mixer.music.unpause()
 
 while running:
-    if pygame.sprite.collide_circle(gobs[0], gobs[1]):
-        gobs[0].rect.x += 2
-        gobs[0].rect.y += 2
+    if name_music == 'data/fail.wav' and not Game_Over:
+        name_music = 'data/battle.mp3'
+        load_music(name_music)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -94,24 +93,23 @@ while running:
         Game_Over = True
     screen.blit(Fon, (0, 0))
     if not Pause:
-        for i in enemys:
-            i.Fire_x_y(player, player.rect)
-        all_sprites.update()
-        for gob in enemys:
-            if gob.hp <= 0:
-                gob.rect.x += 1000
-                gob.rect.y += 1000
-                gob.kill()
+        if not enemys:
+            level.next_level()
+        for vrag1 in enemys:
+            vrag1.Fire_x_y(player, player.rect)
+        all_sprites.update()            
     all_sprites.draw(screen)
     if Pause:
         screen.blit(Pausa, (0, 0))
     if Game_Over:
-        all_sprites = pygame.sprite.Group()
-        enemys = pygame.sprite.Group()
-        gobs = [Goblin(800, 200, (all_sprites, enemys)),
-            Goblin(800, 500, (all_sprites, enemys))]
+        if name_music == 'data/battle.mp3':
+            name_music = 'data/fail.wav'
+            load_music(name_music)
+        all_sprites.empty()
+        enemys.empty()
         player = Fire_magician(all_sprites, enemys)
         hp = Hp(all_sprites, screen)
+        level.next_level(True)
         screen.blit(Game_over, (0, 0))
     pygame.display.flip()
     clock.tick(FPS)

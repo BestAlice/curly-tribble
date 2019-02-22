@@ -25,8 +25,9 @@ sp_Names_U_atak = ['Gob_U_atak1.png','Gob_U_atak2.png','Gob_U_atak3.png',
 
 
 class Goblin(pygame.sprite.Sprite):
-    def __init__(self, x, y, group):
+    def __init__(self, x, y, group, group_enemys):
         super().__init__(group)
+        self.enemys = group_enemys
         self.GobLeft = []
         self.GobRight = []
         self.GobDown = []
@@ -82,7 +83,12 @@ class Goblin(pygame.sprite.Sprite):
             self.collision()
             self.Atak = True
             self.side()
-        
+        self.collision_check()
+        if self.hp <= 0:
+                self.rect.x += 1000
+                self.rect.y += 1000
+                self.kill()
+
     def side(self):
         if not self.Atak:
             if self.animCount +1 >= 30:
@@ -190,6 +196,24 @@ class Goblin(pygame.sprite.Sprite):
             xN = x
         self.rect.x = xN
         self.rect.y = yN
+
+    def collision_check(self):
+        for vrag in self.enemys:
+            if pygame.sprite.collide_mask(self, vrag) and self != vrag:
+                if self.rect.x > vrag.rect.x:
+                    self.rect.x += 2
+                elif self.rect.x < vrag.rect.x:
+                    self.rect.x -= 2
+                elif self.rect.x == vrag.rect.x:
+                    self.rect.x += 1
+                    vrag.rect.x -= 1
+                if self.rect.y >= vrag.rect.y:
+                    self.rect.y += 2
+                elif self.rect.y < vrag.rect.y:
+                    self.rect.y -= 2
+                elif self.rect.y == vrag.rect.y:
+                    self.rect.y += 1
+                    vrag.rect.y -= 1
      
     def get_event(self, event):
         pass

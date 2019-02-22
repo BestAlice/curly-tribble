@@ -4,6 +4,12 @@ WIDTH = 1000 #ширина
 HEIGHT = 700 #высота
 FPS = 30
 
+#границы для справки
+LEFT = 100
+RIGHT = 860
+UP = 0
+DOWN = 540
+
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
     try:
@@ -18,3 +24,8 @@ def load_image(name, colorkey=None):
         image.set_colorkey(colorkey)
     image = image.convert_alpha()
     return image
+
+def load_music(name):
+    pygame.mixer.music.load(name)
+    pygame.mixer.music.play()                 
+    pygame.mixer.music.set_volume(0.1)
