@@ -1,7 +1,7 @@
 import pygame
 from permanent import HEIGHT, WIDTH, load_image, FPS
 from fire_magician import Fire_magician
-from HP import HP
+
 sp_Names_Left = ['Gob_left1.png','Gob_left2.png','Gob_left3.png',
                 'Gob_left4.png','Gob_left5.png','Gob_left6.png','Gob_left7.png',
                 'Gob_left8.png','Gob_left9.png','Gob_left10.png']
@@ -25,8 +25,9 @@ sp_Names_U_atak = ['Gob_U_atak1.png','Gob_U_atak2.png','Gob_U_atak3.png',
 
 
 class Goblin(pygame.sprite.Sprite):
-    def __init__(self, group):
+    def __init__(self, x, y, group, group_enemys):
         super().__init__(group)
+        self.enemys = group_enemys
         self.GobLeft = []
         self.GobRight = []
         self.GobDown = []
@@ -38,9 +39,10 @@ class Goblin(pygame.sprite.Sprite):
         self.image = pygame.transform.rotozoom(load_image('Gob1.png', -1), 0, 0.6)
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
-        self.rect.x = 500
-        self.rect.y = 350
+        self.rect.x = x
+        self.rect.y = y
         self.v = 60 / FPS
+        self.hp = 10
         self.damage = 5
         self.Left = False
         self.Right = False
@@ -49,6 +51,8 @@ class Goblin(pygame.sprite.Sprite):
         self.Atak = False
         self.animCount = 0
         self.full_sp()
+        self.USEREVENT = 1
+        pygame.time.set_timer(self.USEREVENT, 1000)
 
     def full_sp(self):
         for i in range(10):
@@ -69,7 +73,6 @@ class Goblin(pygame.sprite.Sprite):
         self.Fy = rect[1] + int(rect[3] / 2)
         self.update()
 
-        
     def update(self):
         if not pygame.sprite.collide_mask(self, self.player):
             self.rect = self.rect.move(0, 1)
@@ -80,7 +83,12 @@ class Goblin(pygame.sprite.Sprite):
             self.collision()
             self.Atak = True
             self.side()
-        
+        self.collision_check()
+        if self.hp <= 0:
+                self.rect.x += 1000
+                self.rect.y += 1000
+                self.kill()
+
     def side(self):
         if not self.Atak:
             if self.animCount +1 >= 30:
@@ -122,6 +130,7 @@ class Goblin(pygame.sprite.Sprite):
                 self.image = pygame.transform.rotozoom(self.GobAtakU[self.animCount // 5],
                                                         0, 0.6)
                 self.animCount += 1
+
             
         
     def collision(self):
@@ -170,7 +179,7 @@ class Goblin(pygame.sprite.Sprite):
             self.Down = False
             self.Up = False
         elif yN < y and xN == x: #Down
-            yN += self.v + 2.1
+            yN += self.v + 2.2
             self.Left = False
             self.Right = False
             self.Down = True
@@ -187,7 +196,27 @@ class Goblin(pygame.sprite.Sprite):
             xN = x
         self.rect.x = xN
         self.rect.y = yN
+
+    def collision_check(self):
+        for vrag in self.enemys:
+            if pygame.sprite.collide_mask(self, vrag) and self != vrag:
+                if self.rect.x > vrag.rect.x:
+                    self.rect.x += 2
+                elif self.rect.x < vrag.rect.x:
+                    self.rect.x -= 2
+                elif self.rect.x == vrag.rect.x:
+                    self.rect.x += 1
+                    vrag.rect.x -= 1
+                if self.rect.y >= vrag.rect.y:
+                    self.rect.y += 2
+                elif self.rect.y < vrag.rect.y:
+                    self.rect.y -= 2
+                elif self.rect.y == vrag.rect.y:
+                    self.rect.y += 1
+                    vrag.rect.y -= 1
      
     def get_event(self, event):
         pass
-        
+                
+    def wound(self, damage):
+        self.hp -= damage

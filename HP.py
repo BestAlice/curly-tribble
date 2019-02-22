@@ -1,6 +1,6 @@
 import pygame
 
-class HP(pygame.sprite.Sprite):
+class Hp(pygame.sprite.Sprite):
     def __init__(self, group, screen):
         super().__init__(group)
         self.hp = 100 
