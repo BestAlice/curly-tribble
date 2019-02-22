@@ -16,6 +16,34 @@ M = True
 
 all_sprites = pygame.sprite.Group()
 enemys = pygame.sprite.Group()
+
+start_screen = load_image('Start.png')
+space = load_image('переход.png')
+Fon = load_image('Fon.png')
+Game_over = load_image('Game_over.png')
+Pausa = load_image('Pausa.png', -1)
+
+v_start_fon = 200 // FPS
+go_game = False
+press_enter = False
+fon_y = 0
+while not go_game:
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == 13: #Enter
+                press_enter = True
+    if press_enter:
+        screen.blit(start_screen,(0, fon_y))
+        screen.blit(space,(0, fon_y + 700))
+        screen.blit(Fon,(0, fon_y + 1400))
+        fon_y -= v_start_fon
+    else:
+        screen.blit(start_screen,(0, fon_y))
+    if fon_y <= -1400:
+        go_game = True
+    pygame.display.flip()
+    clock.tick(FPS)
+    
 player = Fire_magician(all_sprites, enemys)
 hp = Hp(all_sprites, screen)
 gobs = [Goblin(800, 200, (all_sprites, enemys)),
@@ -88,4 +116,3 @@ while running:
     pygame.display.flip()
     clock.tick(FPS)
 pygame.quit()
-
