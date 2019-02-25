@@ -1,3 +1,4 @@
+# coding: utf-8
 import pygame
 from permanent import HEIGHT, WIDTH, load_image, FPS
 from fire_magician import Fire_magician

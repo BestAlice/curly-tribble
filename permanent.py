@@ -1,3 +1,4 @@
+# coding: utf-8
 import pygame
 import os
 WIDTH = 1000 #ширина
@@ -29,3 +30,10 @@ def load_music(name):
     pygame.mixer.music.load(name)
     pygame.mixer.music.play()                 
     pygame.mixer.music.set_volume(0.1)
+
+def draw(screen, text, x, y, color='white', size=50):
+    font = pygame.font.Font("data/Font.ttf", size)
+    text = font.render(text, 1, pygame.Color(color))
+    text_w = text.get_width()
+    text_h = text.get_height()
+    screen.blit(text, (x, y))

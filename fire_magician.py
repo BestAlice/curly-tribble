@@ -1,3 +1,4 @@
+# coding: utf-8
 import pygame
 from permanent import HEIGHT, WIDTH, load_image, FPS, LEFT, RIGHT, UP, DOWN
 from fire_ball import Fire_ball

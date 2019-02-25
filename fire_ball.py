@@ -1,3 +1,4 @@
+# coding: utf-8
 import pygame
 from permanent import load_image, FPS
 

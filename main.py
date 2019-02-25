@@ -1,6 +1,7 @@
+# coding: utf-8
 import pygame
 import os
-from permanent import WIDTH, HEIGHT, FPS, load_image, load_music
+from permanent import WIDTH, HEIGHT, FPS, load_image, load_music, draw
 from fire_magician import Fire_magician
 from goblin import Goblin
 from HP import Hp
@@ -44,6 +45,7 @@ while not go_game:
         fon_y -= v_start_fon
     else:
         screen.blit(start_screen,(0, fon_y))
+        draw(screen, "Press Enter", 320, 520)
     if fon_y <= -1400:
         go_game = True
     pygame.display.flip()
